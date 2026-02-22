@@ -280,9 +280,9 @@ export interface User {
 // ============================================
 
 /**
- * AI model types for Triad Intelligence
+ * AI model types for Quad Intelligence
  */
-export type AIModel = 'claude-sonnet' | 'claude-haiku' | 'gemini' | 'kimi';
+export type AIModel = 'claude-sonnet' | 'claude-haiku' | 'gemini' | 'kimi' | 'codex';
 
 /**
  * Model routing decision
@@ -343,4 +343,133 @@ export interface AuditTaskPayload {
 export interface EventIngestTaskPayload {
   events: SessionEvent[];
   appId: string;
+}
+
+// ============================================
+// Video Ingestion Types
+// ============================================
+
+/**
+ * Video source types
+ */
+export type VideoSource = 'screen' | 'webcam' | 'file';
+
+/**
+ * Video job status
+ */
+export type VideoJobStatus = 'pending' | 'processing' | 'completed' | 'failed';
+
+/**
+ * Video job
+ */
+export interface VideoJob {
+  id: string;
+  sessionId: string;
+  source: VideoSource;
+  fps: number;
+  status: VideoJobStatus;
+  startedAt: number;
+  completedAt?: number;
+  frames: number[];
+}
+
+/**
+ * Video frame
+ */
+export interface VideoFrame {
+  sessionId: string;
+  data: string; // Base64 encoded frame
+  timestamp: number;
+  width?: number;
+  height?: number;
+}
+
+/**
+ * User behavior analysis
+ */
+export interface UserBehavior {
+  mouseMovements: number;
+  keyboardActivity: number;
+  idleTime: number;
+  engagementScore: number;
+}
+
+/**
+ * Confusion signals
+ */
+export interface ConfusionSignals {
+  repeatedActions: number;
+  longPauses: number;
+  returningToPrevious: boolean;
+  confusionScore: number;
+}
+
+/**
+ * Video analysis result
+ */
+export interface VideoAnalysis {
+  jobId: string;
+  totalFrames: number;
+  duration: number;
+  behavior: UserBehavior;
+  confusionSignals: ConfusionSignals;
+  insights: string[];
+  completedAt: number;
+}
+
+// ============================================
+// Human in the Loop Types
+// ============================================
+
+/**
+ * Human in the Loop mode
+ */
+export type HoLMode = 'manual' | 'auto' | 'hybrid';
+
+/**
+ * Intervention type
+ */
+export type InterventionType = 
+  | 'confirmation'
+  | 'permission'
+  | 'clarification'
+  | 'error_recovery'
+  | 'general'
+  | 'auto_approved';
+
+/**
+ * Intervention status
+ */
+export type InterventionStatus = 'pending' | 'approved' | 'rejected' | 'timeout';
+
+/**
+ * Human intervention
+ */
+export interface HumanIntervention {
+  id: string;
+  sessionId: string;
+  type: InterventionType;
+  reason: string;
+  context: Record<string, unknown>;
+  options?: string[];
+  status: InterventionStatus;
+  createdAt: number;
+  resolvedAt?: number;
+  response?: string;
+  timeout?: number;
+}
+
+/**
+ * Human in the Loop session
+ */
+export interface HumanInTheLoopSession {
+  id: string;
+  sessionId: string;
+  mode: HoLMode;
+  triggerCondition: string;
+  status: 'active' | 'paused' | 'completed';
+  createdAt: number;
+  endedAt?: number;
+  interventions: HumanIntervention[];
+  autoApprove: boolean;
 }
