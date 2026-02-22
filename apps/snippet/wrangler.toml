@@ -1,0 +1,7 @@
+name = "rafael-cdn"
+main = "src/index.ts"
+routes = [{ pattern = "cdn.rafael.dev/*", zone_name = "rafael.dev" }]
+
+[[r2_buckets]]
+binding = "DAP_BUCKET"
+bucket_name = "rafael-snippet"

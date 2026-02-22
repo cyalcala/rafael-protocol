@@ -1,0 +1,25 @@
+{
+  "name": "rafael-protocol",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "trigger"
+  ],
+  "scripts": {
+    "dev": "bun run --filter \"rafael:*\"",
+    "build": "bun run --filter \"rafael:*\" build",
+    "test": "bun test",
+    "typecheck": "bun tsc --noEmit",
+    "lint": "eslint . --ext .ts,.tsx"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "typescript": "^5.3.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

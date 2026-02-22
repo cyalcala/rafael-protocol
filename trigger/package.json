@@ -1,0 +1,19 @@
+{
+  "name": "@rafael/trigger",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "trigger-dev dev",
+    "deploy": "trigger-dev deploy"
+  },
+  "dependencies": {
+    "@rafael/agent": "workspace:*",
+    "@rafael/context": "workspace:*",
+    "@rafael/types": "workspace:*",
+    "@trigger.dev/sdk": "^3.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.0"
+  }
+}

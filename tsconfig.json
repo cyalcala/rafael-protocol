@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "composite": true,
+    "declaration": true,
+    "declarationMap": true,
+    "isolatedModules": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "verbatimModuleSyntax": true,
+    "paths": {
+      "@rafael/types": ["./packages/types/src/index.ts"],
+      "@rafael/agent": ["./packages/agent/src/index.ts"],
+      "@rafael/context": ["./packages/context/src/index.ts"]
+    },
+    "types": ["bun-types"]
+  },
+  "include": ["packages/*/src", "apps/*/src", "trigger/**/*"],
+  "exclude": ["node_modules", "dist"]
+}
