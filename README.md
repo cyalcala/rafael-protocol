@@ -1,42 +1,107 @@
-# 🚀 Rafael Protocol
+# Project Rafael: A Blueprint for Addressing Software Friction
 
-<p align="center">
-  <img src="https://img.shields.io/badge/AI-Native-DAP-6H4FD3?style=for-the-badge" alt="AI-Native DAP">
-  <img src="https://img.shields.io/badge/Stack-TypeScript_Bun_Trigger.dev-FF6B6B?style=for-the-badge" alt="Tech Stack">
-  <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" alt="License">
-</p>
+**Author**: Rafael Protocol Team
 
-<p align="center">
-  <strong>AI-Native Digital Adoption Platform</strong> — Built with Claude Agents · TypeScript · Bun · Trigger.dev · Railway · Cloudflare
-</p>
+**Date**: February 2026
+
+**Status**: Architectural Proposal & Concept Paper
+
+**Stack**: Kimi · Gemini · Claude · Trigger.dev · Cloudflare Workers · Bun · TypeScript
 
 ---
 
-## 📋 Table of Contents
+## 1. Abstract
 
-- [Overview](#overview)
-- [Project Structure](#project-structure)
-- [Architecture](#architecture)
-- [Tech Stack](#tech-stack)
-- [Getting Started](#getting-started)
-- [Documentation](#documentation)
-- [Contributing](#contributing)
-- [License](#license)
+As software complexity scales, the gap between what a user intends to do and their ability to navigate the interface—what I call **Interface Friction**—continues to widen. For years, Digital Adoption Platforms (DAPs) have tried to solve this with static tooltips. However, these systems often struggle with "brittle" selectors that break when a UI updates.
+
+This paper outlines Rafael, a conceptual open-source protocol. The goal is to explore shifting from passive guidance to **supported execution**. By combining a Triad Intelligence of AI models with a durable execution backend, Rafael aims to create a layer that helps complete tasks rather than just explaining them.
 
 ---
 
-## 🎯 Overview
+## 2. The Observations: The Brittle Selector Problem
 
-Rafael Protocol is a **next-generation Digital Adoption Platform (DAP)** built from first principles in 2026. It disrupts traditional solutions like WalkMe by leveraging AI to deliver:
+In my experience with technical documentation, I've seen how quickly "how-to" guides become obsolete. Current DAPs often face the same issue: they rely on hard-coded CSS paths. When an enterprise application like Salesforce or Workday makes even a minor update, these anchors snap, rendering the entire onboarding library useless.
 
-| Traditional DAP            | Rafael Protocol                           |
-| -------------------------- | ----------------------------------------- |
-| Manual, weeks of authoring | Auto-generated from session data          |
-| Constant manual updates    | Self-healing, auto-detects UI changes     |
-| Passive tooltips           | **Active execution** — AI does it for you |
-| Role-based segments        | Individual + contextual personalization   |
-| No intelligence            | Learns from every session                 |
-| $100k–$500k/yr             | Disruptive wedge pricing                  |
+Beyond maintenance, there is the issue of effort. Most DAPs are **passive**, requiring the user to read a prompt and then perform the action themselves. I am exploring whether we can use AI to reason through the Document Object Model (DOM) via a **SemanticTree**—a compressed, privacy-first representation of the UI—to reduce the cognitive load on the user.
+
+---
+
+## 3. The Proposed Logic: Multi-Model Routing (Triad Intelligence)
+
+To ensure stability and speed, I am proposing an architecture that doesn't rely on a single AI provider. I call this **Model Heterogeneity**, using different "specialists" for different needs to optimize for both reasoning depth and cost:
+
+| Model      | Role               | Purpose                                                          |
+| ---------- | ------------------ | ---------------------------------------------------------------- |
+| **Claude** | Lead Engineer      | High-stakes DOM reasoning and complex multi-step tool use        |
+| **Gemini** | Vision Specialist  | Fast, sub-second snapshots and triage of current UI state        |
+| **Kimi**   | Context Specialist | Process large-scale enterprise documentation and knowledge bases |
+
+By routing these through a gateway like **Cloudflare AI Gateway**, the system aims to achieve higher uptime and lower latency than a single-model approach.
+
+---
+
+## 4. Proposed Infrastructure: Ensuring Task Durability
+
+One of the most difficult parts of browser automation is losing progress when a tab is closed or a connection drops. My proposal suggests using **Durable Execution** (specifically the logic used in Trigger.dev v3) to solve this:
+
+```mermaid
+flowchart TB
+    subgraph User["User's Browser"]
+        Snippet["DAP Snippet"]
+    end
+
+    subgraph Edge["Cloudflare Edge"]
+        Worker["Workers"]
+        R2["R2 Bucket"]
+    end
+
+    subgraph Backend["Railway (Bun)"]
+        API["API Server"]
+    end
+
+    subgraph Execution["Trigger.dev"]
+        Agent["Agent Task"]
+        Streams["Realtime Streams"]
+        State["State Persistence"]
+    end
+
+    User -->|GET snippet| Edge
+    Edge --> R2
+
+    User -->|POST /api/*| Backend
+    Backend -->|trigger| Execution
+    Execution -->|re-attach| Streams
+    Streams -->|resume| User
+```
+
+### Key Components
+
+- **Background Tasks**: Moving the "brain" of the operation to a backend server (hosted on Railway using Bun for ultra-fast execution).
+- **State Persistence**: Ensuring the task stays "alive" in the cloud even if the user refreshes the browser or switches devices.
+- **Real-time Re-attachment**: Utilizing Trigger.dev Realtime Streams to allow the agent to re-attach to the live DOM once the user returns to the page.
+- **Edge Delivery**: Utilizing Cloudflare Workers to deliver the lightweight snippet and manage session routing with sub-50ms global latency.
+
+---
+
+## 5. Potential Economic Shift
+
+If this logic holds, the value proposition of digital adoption changes fundamentally:
+
+| Legacy DAP                                                           | Rafael Protocol                                         |
+| -------------------------------------------------------------------- | ------------------------------------------------------- |
+| Organizations pay for a tool that teaches a user how to use software | Organizations pay for the completion of the task itself |
+| Training cost                                                        | Operational saving                                      |
+| Passive guidance                                                     | **Active execution**                                    |
+
+This turns the DAP into a **"Labor-as-a-Service"** center.
+
+---
+
+## 6. Conclusion & Open Invitation
+
+I am a technical writer, not a traditional software engineer. I am approaching this as an architect of information, using my background to define the logic of how we turn "Knowledge Bases" into "Action Bases." I am using modern AI tools and a robust stack—Bun, TypeScript, and Trigger.dev—to help bridge the coding gap and build the foundation.
+
+I'm sharing the Rafael Protocol as an **open-source blueprint** because I believe the best solutions for software friction should be transparent and collaborative. This is an experiment in its early stages. If you are an engineer or a fellow writer interested in how we might move from "static docs" to "active agents," I invite you to look at the logic and join the conversation on GitHub.
 
 ---
 
@@ -44,189 +109,30 @@ Rafael Protocol is a **next-generation Digital Adoption Platform (DAP)** built f
 
 ```
 rafael-protocol/
-├── .github/
-│   └── workflows/
-│       └── deploy.yml          # CI/CD pipeline
-├── .env.example                # Environment variables template
-├── apps/
-│   └── server/                 # Railway API server (Bun + Hono)
-│       ├── src/
-│       │   └── index.ts
-│       └── package.json
-├── docs/
-│   └── architecture.md         # Full architecture document
-├── packages/
-│   └── types/                  # Shared TypeScript types
-│       ├── src/
-│       │   └── index.ts
-│       └── package.json
+├── .github/workflows/     # CI/CD pipeline
+├── .env.example          # Environment template
+├── apps/server/          # Railway API server
+├── docs/                 # Documentation
+├── packages/types/       # Shared TypeScript types
 ├── .gitignore
-├── package.json               # Monorepo root
-├── tsconfig.json              # TypeScript config
+├── package.json         # Monorepo root
+├── tsconfig.json
 └── README.md
-```
-
-### Package Dependency Graph
-
-```mermaid
-flowchart TB
-    subgraph Root["Root (package.json)"]
-        Workspaces["workspaces: [apps/*, packages/*]"]
-    end
-
-    subgraph Apps["Apps"]
-        Server["@rafael/server<br/>(Railway)"]
-    end
-
-    subgraph Packages["Packages"]
-        Types["@rafael/types<br/>(Pure types)"]
-    end
-
-    Server --> Types
-```
-
----
-
-## 🏗️ Architecture
-
-```mermaid
-flowchart TB
-    subgraph Browser["BROWSER (Customer App)"]
-        direction TB
-        Script["<script src='cdn.rafael.io/dap.min.js' data-app-key='rafael_xxx'></script>"]
-
-        subgraph Snippet["SNIPPET (Shadow DOM)"]
-            DOMDistiller["DOMDistiller"]
-            CopilotUI["CopilotUI"]
-            ActionExecutor["ActionExecutor"]
-            EventTracker["EventTracker"]
-            RealtimeClient["RealtimeClient"]
-        end
-    end
-
-    subgraph Cloud["CLOUDFLARE"]
-        Worker["Worker → serves snippet from R2"]
-        R2["R2 Bucket (dap-snippet)"]
-    end
-
-    subgraph Railway["RAILWAY"]
-        API["Bun + Hono API Server"]
-    end
-
-    subgraph Trigger["TRIGGER.DEV CLOUD"]
-        AgentTask["agentTask"]
-        IntentTask["intentTask"]
-        GuideGenTask["guideGenTask"]
-    end
-
-    subgraph Data["DATA LAYER"]
-        Supabase["Supabase (Postgres)"]
-        Redis["Upstash Redis"]
-        pgvector["pgvector (Embeddings)"]
-    end
-
-    Script -->|GET| Cloud
-    Snippet -->|POST /api/*| Railway
-    Railway -->|tasks.trigger| Trigger
-    Trigger --> Supabase
-    Trigger --> Redis
-    Trigger --> pgvector
 ```
 
 ---
 
 ## 🛠️ Tech Stack
 
-| Component        | Technology              | Purpose                       |
-| ---------------- | ----------------------- | ----------------------------- |
-| 🤖 **AI Agent**  | Claude (Anthropic)      | Reasoning & tool execution    |
-| ⚡ **Runtime**   | Bun                     | Fast JavaScript runtime       |
-| 🖥️ **Backend**   | Hono + Railway          | Always-on API server          |
-| ⏱️ **Tasks**     | Trigger.dev             | Durable task execution        |
-| 🌐 **CDN**       | Cloudflare R2 + Workers | Global snippet delivery       |
-| 💾 **Database**  | Supabase                | Users, orgs, sessions, guides |
-| 🧠 **Vector DB** | pgvector                | Knowledge graph embeddings    |
-| ⚡ **Cache**     | Upstash Redis           | Context caching               |
-
----
-
-## 🚦 Getting Started
-
-### Prerequisites
-
-- [Bun](https://bun.sh/) 1.0+ or Node.js 18+
-- Git
-- GitHub account
-
-### Quick Start
-
-```bash
-# Clone the repository
-git clone https://github.com/cyalcala/rafael-protocol.git
-
-# Navigate to project
-cd rafael-protocol
-
-# Install dependencies
-bun install
-
-# Run development server
-bun run dev
-
-# Type check
-bun run typecheck
-```
-
-### Environment Setup
-
-```bash
-# Copy environment template
-cp .env.example .env
-
-# Configure your environment variables
-# See .env.example for required variables
-```
-
----
-
-## 📚 Documentation
-
-| File                                              | Description                     |
-| ------------------------------------------------- | ------------------------------- |
-| 📄 [docs/architecture.md](./docs/architecture.md) | Master Architecture Document    |
-| 📄 [.env.example](./.env.example)                 | Environment variables reference |
-
----
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License.
-
----
-
-## 🙏 Acknowledgments
-
-- Built with 🤖 by Claude
-- Architecture validated by Claude and Gemini AI systems
+- **AI Models**: Claude, Gemini, Kimi
+- **Runtime**: Bun
+- **Language**: TypeScript
+- **Task Execution**: Trigger.dev
+- **Edge**: Cloudflare Workers + R2
+- **Backend**: Railway
 
 ---
 
 <p align="center">
-  <strong>The window is open. The models are ready. The market is waiting.</strong>
-</p>
-
----
-
-<p align="center">
-  <em> Rafael Protocol</em>
+  <strong>From Knowledge Bases to Action Bases</strong>
 </p>
