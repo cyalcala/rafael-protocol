@@ -1,138 +1,71 @@
-# Project Rafael: A Blueprint for Addressing Software Friction
+# THE RAFAEL PROTOCOL: Healing Software Friction via Multi-Model Agentic Orchestration
 
-**Author**: Rafael Protocol Team
+**Author**: Cyrus Alcala
 
-**Date**: February 2026
+**Date**: February 22 2026
 
-**Status**: Architectural Proposal & Concept Paper
-
-**Stack**: Kimi · Gemini · Claude · Trigger.dev · Cloudflare Workers · Bun · TypeScript
+**Subject**: Digital Adoption, Autonomous Labor, and the Triad Intelligence Architecture
 
 ---
 
-## 1. Abstract
+## Abstract
 
-As software complexity scales, the gap between what a user intends to do and their ability to navigate the interface—what I call **Interface Friction**—continues to widen. For years, Digital Adoption Platforms (DAPs) have tried to solve this with static tooltips. However, these systems often struggle with "brittle" selectors that break when a UI updates.
+The gap between human intent and software execution—defined here as **Interface Friction**—has reached a breaking point. Legacy Digital Adoption Platforms (DAPs) rely on static, "brittle" selectors that break during UI updates and offer only passive guidance.
 
-This paper outlines Rafael, a conceptual open-source protocol. The goal is to explore shifting from passive guidance to **supported execution**. By combining a Triad Intelligence of AI models with a durable execution backend, Rafael aims to create a layer that helps complete tasks rather than just explaining them.
-
----
-
-## 2. The Observations: The Brittle Selector Problem
-
-In my experience with technical documentation, I've seen how quickly "how-to" guides become obsolete. Current DAPs often face the same issue: they rely on hard-coded CSS paths. When an enterprise application like Salesforce or Workday makes even a minor update, these anchors snap, rendering the entire onboarding library useless.
-
-Beyond maintenance, there is the issue of effort. Most DAPs are **passive**, requiring the user to read a prompt and then perform the action themselves. I am exploring whether we can use AI to reason through the Document Object Model (DOM) via a **SemanticTree**—a compressed, privacy-first representation of the UI—to reduce the cognitive load on the user.
+This document proposes Rafael: an open-source Agentic OS concept designed to replace passive tooltips with **Autonomous Labor**. The blueprint outlines a system leveraging a **Triad Intelligence** (Claude, Gemini, and Kimi) and a **Durable Execution** spine (Trigger.dev) to create a self-healing layer that performs the work for the user. This is the architectural roadmap for building that system from scratch.
 
 ---
 
-## 3. The Proposed Logic: Multi-Model Routing (Triad Intelligence)
+## The Problem: The Brittle Selector Crisis
 
-To ensure stability and speed, I am proposing an architecture that doesn't rely on a single AI provider. I call this **Model Heterogeneity**, using different "specialists" for different needs to optimize for both reasoning depth and cost:
+The DAP industry is currently built on a fragile foundation. Traditional platforms use static CSS selectors and hard-coded paths to anchor their guides. When an enterprise app (like Salesforce or Workday) updates its UI, these anchors snap, rendering the onboarding library useless and requiring manual rewrites.
 
-| Model      | Role               | Purpose                                                          |
-| ---------- | ------------------ | ---------------------------------------------------------------- |
-| **Claude** | Lead Engineer      | High-stakes DOM reasoning and complex multi-step tool use        |
-| **Gemini** | Vision Specialist  | Fast, sub-second snapshots and triage of current UI state        |
-| **Kimi**   | Context Specialist | Process large-scale enterprise documentation and knowledge bases |
-
-By routing these through a gateway like **Cloudflare AI Gateway**, the system aims to achieve higher uptime and lower latency than a single-model approach.
+Furthermore, traditional DAPs are **passive**. They require a human to read a tooltip and then perform the action. In an era where AI models can reason through a Document Object Model (DOM), this "middleman" human effort is redundant. We need software that doesn't just point to the button, but clicks it.
 
 ---
 
-## 4. Proposed Infrastructure: Ensuring Task Durability
+## The Proposed Architecture: Triad Intelligence
 
-One of the most difficult parts of browser automation is losing progress when a tab is closed or a connection drops. My proposal suggests using **Durable Execution** (specifically the logic used in Trigger.dev v3) to solve this:
+To solve this, Rafael is designed around a multi-model architecture. Relying on a single AI provider introduces unacceptable risks regarding latency, cost, and regional outages. The planned system utilizes **Heterogeneous Model Routing**:
 
-```mermaid
-flowchart TB
-    subgraph User["User's Browser"]
-        Snippet["DAP Snippet"]
-    end
+| Model      | Role                   | Purpose                                                   |
+| ---------- | ---------------------- | --------------------------------------------------------- |
+| **Claude** | The Lead Engineer      | High-stakes DOM reasoning and complex multi-step tool use |
+| **Gemini** | The Vision Specialist  | Sub-second UI perception and visual triage                |
+| **Kimi**   | The Context Specialist | Processing massive enterprise documentation               |
 
-    subgraph Edge["Cloudflare Edge"]
-        Worker["Workers"]
-        R2["R2 Bucket"]
-    end
-
-    subgraph Backend["Railway (Bun)"]
-        API["API Server"]
-    end
-
-    subgraph Execution["Trigger.dev"]
-        Agent["Agent Task"]
-        Streams["Realtime Streams"]
-        State["State Persistence"]
-    end
-
-    User -->|GET snippet| Edge
-    Edge --> R2
-
-    User -->|POST /api/*| Backend
-    Backend -->|trigger| Execution
-    Execution -->|re-attach| Streams
-    Streams -->|resume| User
-```
-
-### Key Components
-
-- **Background Tasks**: Moving the "brain" of the operation to a backend server (hosted on Railway using Bun for ultra-fast execution).
-- **State Persistence**: Ensuring the task stays "alive" in the cloud even if the user refreshes the browser or switches devices.
-- **Real-time Re-attachment**: Utilizing Trigger.dev Realtime Streams to allow the agent to re-attach to the live DOM once the user returns to the page.
-- **Edge Delivery**: Utilizing Cloudflare Workers to deliver the lightweight snippet and manage session routing with sub-50ms global latency.
+By routing these models via a gateway (like Cloudflare AI Gateway), the system aims to optimize for the lowest possible latency and highest reasoning uptime.
 
 ---
 
-## 5. Potential Economic Shift
+## The Execution Spine: Durable Tasks
 
-If this logic holds, the value proposition of digital adoption changes fundamentally:
+The greatest challenge for browser-based agents is **state synchronization**. If a user closes a tab mid-task, a standard agent process dies.
 
-| Legacy DAP                                                           | Rafael Protocol                                         |
-| -------------------------------------------------------------------- | ------------------------------------------------------- |
-| Organizations pay for a tool that teaches a user how to use software | Organizations pay for the completion of the task itself |
-| Training cost                                                        | Operational saving                                      |
-| Passive guidance                                                     | **Active execution**                                    |
+Rafael's architecture plans to solve this through **Durable Execution** using Trigger.dev v3:
 
-This turns the DAP into a **"Labor-as-a-Service"** center.
+- **Server-Side Tasks**: When a user requests a complex task, the job is handed off to a backend runtime (Bun hosted on Railway)
+- **Persistent Memory**: If the user navigates away or loses connection, the task remains "alive" in the background
+- **Real-time Re-attachment**: When the user returns, the agent re-attaches to the live DOM state
 
 ---
 
-## 6. Conclusion & Open Invitation
+## Target Browser Skillset
 
-I am a technical writer, not a traditional software engineer. I am approaching this as an architect of information, using my background to define the logic of how we turn "Knowledge Bases" into "Action Bases." I am using modern AI tools and a robust stack—Bun, TypeScript, and Trigger.dev—to help bridge the coding gap and build the foundation.
+To interact with the web, the Rafael Agent requires a standardized set of tools:
 
-I'm sharing the Rafael Protocol as an **open-source blueprint** because I believe the best solutions for software friction should be transparent and collaborative. This is an experiment in its early stages. If you are an engineer or a fellow writer interested in how we might move from "static docs" to "active agents," I invite you to look at the logic and join the conversation on GitHub.
-
----
-
-## 📁 Project Structure
-
-```
-rafael-protocol/
-├── .github/workflows/     # CI/CD pipeline
-├── .env.example          # Environment template
-├── apps/server/          # Railway API server
-├── docs/                 # Documentation
-├── packages/types/       # Shared TypeScript types
-├── .gitignore
-├── package.json         # Monorepo root
-├── tsconfig.json
-└── README.md
-```
+- **Perception**: `read_page` to capture a semantic tree of the viewport, explicitly stripping PII before data processing
+- **Interaction**: Robust `click_element` and `fill_field` tools with fallback strategies (ARIA labels, text content, test IDs)
+- **Orchestration**: An `ask_user` tool acting as a "Human-in-the-Loop" safety valve
 
 ---
 
-## 🛠️ Tech Stack
+## Call to Action: Building in Public
 
-- **AI Models**: Claude, Gemini, Kimi
-- **Runtime**: Bun
-- **Language**: TypeScript
-- **Task Execution**: Trigger.dev
-- **Edge**: Cloudflare Workers + R2
-- **Backend**: Railway
+I am a technical writer, not a traditional software engineer. I am writing this protocol because the logic of how we onboard users to software is fundamentally broken, and the tools to fix it—Gemini, Kimi, Claude, Cloudflare Workers, Trigger.dev, and Bun JS—finally exist.
 
----
+This document is **Day Zero**.
 
-<p align="center">
-  <strong>From Knowledge Bases to Action Bases</strong>
-</p>
+I am building Rafael in public because the "Healing Layer" of the web should not be a closed-source black box. If you are an engineer, a designer, or an enterprise architect who sees the logic in this blueprint, I invite you to join me.
+
+**Let's build an internet that works for us.**
