@@ -1,0 +1,33 @@
+{
+  "name": "rafael-protocol",
+  "version": "1.0.0",
+  "description": "AI-Native Digital Adoption Platform",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "bun run --filter '*' dev",
+    "build": "bun run --filter '*' build",
+    "test": "bun run --filter '*' test",
+    "typecheck": "bun run --filter '*' typecheck"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "bun": ">=1.0.0"
+  },
+  "keywords": [
+    "dap",
+    "digital-adoption",
+    "ai",
+    "claude",
+    "automation",
+    "typescript"
+  ],
+  "author": "Rafael Protocol",
+  "license": "MIT"
+}

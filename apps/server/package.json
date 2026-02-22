@@ -1,0 +1,21 @@
+{
+  "name": "@rafael/server",
+  "version": "1.0.0",
+  "description": "Rafael Protocol API Server",
+  "type": "module",
+  "scripts": {
+    "dev": "bun run src/index.ts",
+    "start": "bun run src/index.ts",
+    "build": "bun build src/index.ts --outdir dist --target node",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "hono": "^4.0.0",
+    "@trigger.dev/sdk": "^3.0.0",
+    "@anthropic-ai/sdk": "^0.30.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.0",
+    "@types/bun": "^1.0.0"
+  }
+}

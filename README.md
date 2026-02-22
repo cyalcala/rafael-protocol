@@ -15,11 +15,9 @@
 ## 📋 Table of Contents
 
 - [Overview](#overview)
+- [Project Structure](#project-structure)
 - [Architecture](#architecture)
 - [Tech Stack](#tech-stack)
-- [Key Features](#key-features)
-- [System Flow](#system-flow)
-- [Data Pipeline](#data-pipeline)
 - [Getting Started](#getting-started)
 - [Documentation](#documentation)
 - [Contributing](#contributing)
@@ -42,6 +40,53 @@ Rafael Protocol is a **next-generation Digital Adoption Platform (DAP)** built f
 
 ---
 
+## 📁 Project Structure
+
+```
+rafael-protocol/
+├── .github/
+│   └── workflows/
+│       └── deploy.yml          # CI/CD pipeline
+├── .env.example                # Environment variables template
+├── apps/
+│   └── server/                 # Railway API server (Bun + Hono)
+│       ├── src/
+│       │   └── index.ts
+│       └── package.json
+├── docs/
+│   └── architecture.md         # Full architecture document
+├── packages/
+│   └── types/                  # Shared TypeScript types
+│       ├── src/
+│       │   └── index.ts
+│       └── package.json
+├── .gitignore
+├── package.json               # Monorepo root
+├── tsconfig.json              # TypeScript config
+└── README.md
+```
+
+### Package Dependency Graph
+
+```mermaid
+flowchart TB
+    subgraph Root["Root (package.json)"]
+        Workspaces["workspaces: [apps/*, packages/*]"]
+    end
+
+    subgraph Apps["Apps"]
+        Server["@rafael/server<br/>(Railway)"]
+    end
+
+    subgraph Packages["Packages"]
+        Types["@rafael/types<br/>(Pure types)"]
+    end
+
+    Server --> Types
+```
+
+---
+
 ## 🏗️ Architecture
 
 ```mermaid
@@ -57,10 +102,6 @@ flowchart TB
             EventTracker["EventTracker"]
             RealtimeClient["RealtimeClient"]
         end
-
-        DOMDistiller -->|SemanticTree| CopilotUI
-        ActionExecutor -->|executes| DOMDistiller
-        EventTracker -->|sends events| RealtimeClient
     end
 
     subgraph Cloud["CLOUDFLARE"]
@@ -70,17 +111,12 @@ flowchart TB
 
     subgraph Railway["RAILWAY"]
         API["Bun + Hono API Server"]
-        AgentEndpoint["/api/agent"]
-        EventsEndpoint["/api/events"]
-        GuidesEndpoint["/api/guides"]
     end
 
     subgraph Trigger["TRIGGER.DEV CLOUD"]
         AgentTask["agentTask"]
         IntentTask["intentTask"]
         GuideGenTask["guideGenTask"]
-        AuditTask["auditTask"]
-        EventIngestTask["eventIngestTask"]
     end
 
     subgraph Data["DATA LAYER"]
@@ -89,92 +125,17 @@ flowchart TB
         pgvector["pgvector (Embeddings)"]
     end
 
-    Script -->|GET dap.min.js| Cloud
-    Cloud --> R2
-
-    Snippet -->|POST /api/agent| Railway
-    Snippet -->|POST /api/events| Railway
-    Snippet -->|SSE subscribe| Trigger
-
-    Railway --> AgentEndpoint
-    Railway --> EventsEndpoint
-    Railway --> GuidesEndpoint
-
+    Script -->|GET| Cloud
+    Snippet -->|POST /api/*| Railway
     Railway -->|tasks.trigger| Trigger
-    Trigger --> AgentTask
-    Trigger --> IntentTask
-    Trigger --> GuideGenTask
-    Trigger --> AuditTask
-    Trigger --> EventIngestTask
-
     Trigger --> Supabase
     Trigger --> Redis
     Trigger --> pgvector
 ```
 
-### Hybrid Architecture Model
-
-```mermaid
-flowchart LR
-    subgraph Lightweight["LIGHTWEIGHT (Cloudflare Edge)"]
-        SnippetDel["Snippet delivery (R2)"]
-        SessionRout["Session routing & CORS"]
-        DurableObj["Durable Objects (future)"]
-        AIGateway["AI Gateway (future)"]
-    end
-
-    subgraph AlwaysOn["ALWAYS-ON HTTP (Railway)"]
-        Validation["Request validation"]
-        TaskTrigger["Task triggering"]
-        GuideServe["Guide serving"]
-        TokenGen["Public token generation"]
-    end
-
-    subgraph Heavy["HEAVY COMPUTE (Trigger.dev)"]
-        AgentLoop["Claude agent loop"]
-        IntentClass["Intent classification"]
-        GuideGen["Guide generation"]
-        StaleDetect["Stale guide audit"]
-        EventProcess["Session event processing"]
-    end
-
-    Lightweight --> AlwaysOn --> Heavy
-```
-
 ---
 
 ## 🛠️ Tech Stack
-
-```mermaid
-mindmap
-  root((Rafael
-  Protocol))
-    AI Agent
-      Claude Sonnet
-      Claude Haiku
-      Tool-use SDK
-    Runtime
-      Bun
-      TypeScript
-    Backend
-      Hono
-      Railway
-    Tasks
-      Trigger.dev
-      Realtime Streams v2
-    CDN
-      Cloudflare R2
-      Cloudflare Workers
-    Database
-      Supabase
-      PostgreSQL
-      pgvector
-    Cache
-      Upstash Redis
-    Observability
-      Helicone
-      Sentry
-```
 
 | Component        | Technology              | Purpose                       |
 | ---------------- | ----------------------- | ----------------------------- |
@@ -189,120 +150,11 @@ mindmap
 
 ---
 
-## ✨ Key Features
-
-### Core Capabilities
-
-```mermaid
-flowchart TB
-    subgraph Features["Key Features"]
-        AutoGen["Auto-Generated Guides"]
-        SelfHeal["Self-Healing"]
-        ActiveExec["Active Execution"]
-        Personalize["Personalization"]
-        Knowledge["Knowledge Graph"]
-        Realtime["Real-time Streaming"]
-    end
-
-    AutoGen -->|Session data| Knowledge
-    SelfHeal -->|UI change detection| Knowledge
-    ActiveExec -->|Claude tools| Personalize
-    Knowledge -->|Path clustering| AutoGen
-    Realtime -->|SSE| ActiveExec
-```
-
-1. **🤖 Auto-Generated Guides** — No manual authoring needed. AI generates guides from session clusters
-2. **🔧 Self-Healing** — Automatically detects UI changes and updates guides
-3. **⚡ Active Execution** — AI performs tasks for users, not just shows tooltips
-4. **👤 Personalization** — Individual + contextual learning for each user
-5. **🧠 Knowledge Graph** — Builds understanding from every session
-6. **📡 Real-time Streaming** — Live agent thought process via SSE
-
-### The Intelligence Pipeline
-
-```mermaid
-flowchart LR
-    A1[Week 1<br/>No knowledge] --> A2[Week 2-4<br/>100+ sessions]
-    A2 --> A3[Month 2-3<br/>1000+ sessions]
-    A3 --> A4[Month 6+<br/>Data moat]
-
-    A1 -->|70% success| B1[Agent relies on DOM]
-    A2 -->|82% success| B2[First guides auto-generated]
-    A3 -->|90% success| B3[Knowledge graph populated]
-    A4 -->|95% success| B4[Platform knows app better]
-```
-
----
-
-## 🔄 System Flow
-
-### Full Agent Invocation Flow
-
-```mermaid
-sequenceDiagram
-    participant User
-    participant Snippet
-    participant Railway
-    participant Trigger
-    participant Claude
-
-    User->>Snippet: "Create Q1 report"
-    Snippet->>Snippet: DOMDistiller.capture()
-    Snippet->>Railway: POST /api/agent
-    Railway->>Railway: validateAppKey()
-    Railway->>Trigger: tasks.trigger("dap-agent-run")
-    Trigger->>Claude: Run agent loop
-    Claude->>Trigger: Tool calls (stream)
-    Trigger->>Snippet: SSE stream events
-    Snippet->>Snippet: ActionExecutor.execute()
-    Snippet->>User: Display results
-```
-
-### Event Ingestion Flow
-
-```mermaid
-sequenceDiagram
-    participant Browser
-    participant Snippet
-    participant Railway
-    participant Trigger
-    participant Supabase
-
-    Browser->>Snippet: User interactions
-    Snippet->>Snippet: EventTracker records
-    Snippet->>Railway: sendBeacon(/api/events)
-    Railway->>Trigger: Queue eventIngestTask
-    Trigger->>Supabase: Persist events
-    Trigger->>Trigger: Detect rage clicks
-    Trigger->>Trigger: Trigger intent classification
-```
-
----
-
-## 📊 Data Pipeline
-
-### Knowledge Graph Formation
-
-```mermaid
-flowchart TB
-    Session["Session recorded"] --> Extract["Extract successful paths"]
-    Extract --> Fingerprint["Path fingerprinting"]
-    Fingerprint --> Cluster["Cluster frequency"]
-    Cluster --> CommonPath["CommonPath records"]
-    CommonPath --> GuideGen["Claude generates Guide"]
-    GuideGen --> Validate["Validate & publish"]
-    Validate --> Track["Track guide success"]
-    Track --> Detect["Detect stale guides"]
-    Detect -->| regeneration| GuideGen
-```
-
----
-
 ## 🚦 Getting Started
 
 ### Prerequisites
 
-- Node.js 18+ or Bun 1.0+
+- [Bun](https://bun.sh/) 1.0+ or Node.js 18+
 - Git
 - GitHub account
 
@@ -315,33 +167,34 @@ git clone https://github.com/cyalcala/rafael-protocol.git
 # Navigate to project
 cd rafael-protocol
 
-# View the architecture document
-cat dap-agent.md
+# Install dependencies
+bun install
 
-# Check out the initial commit
-cat INITIAL.md
+# Run development server
+bun run dev
+
+# Type check
+bun run typecheck
 ```
 
-### Environment Variables
-
-See `dap-agent.md` section 15 for the complete environment variables reference.
+### Environment Setup
 
 ```bash
-# Required environment variables
-ANTHROPIC_API_KEY=sk-ant-...
-TRIGGER_SECRET_KEY=tr_prod_...
-DATABASE_URL=postgresql://...
+# Copy environment template
+cp .env.example .env
+
+# Configure your environment variables
+# See .env.example for required variables
 ```
 
 ---
 
 ## 📚 Documentation
 
-| File                              | Description                                                     |
-| --------------------------------- | --------------------------------------------------------------- |
-| 📄 [dap-agent.md](./dap-agent.md) | Master Architecture Document - Complete technical specification |
-| 📄 [INITIAL.md](./INITIAL.md)     | Initial commit documentation                                    |
-| 📄 [README.md](./README.md)       | This file - Project overview with diagrams                      |
+| File                                              | Description                     |
+| ------------------------------------------------- | ------------------------------- |
+| 📄 [docs/architecture.md](./docs/architecture.md) | Master Architecture Document    |
+| 📄 [.env.example](./.env.example)                 | Environment variables reference |
 
 ---
 
@@ -357,15 +210,14 @@ DATABASE_URL=postgresql://...
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License.
 
 ---
 
 ## 🙏 Acknowledgments
 
 - Built with 🤖 by Claude
-- Inspired by [WalkMe](https://www.walkme.com/) - the category leader we're disrupting
-- Architecture validated by both Claude and Gemini AI systems
+- Architecture validated by Claude and Gemini AI systems
 
 ---
 
@@ -376,5 +228,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ---
 
 <p align="center">
-  <em>Document compiled: February 2026</em>
+  <em> Rafael Protocol</em>
 </p>

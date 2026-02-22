@@ -6,20 +6,30 @@
 
 This is the initial commit for **Rafael Protocol** - an AI-Native Digital Adoption Platform (DAP) built with modern technologies including Claude Agents, TypeScript, Bun, Trigger.dev, Railway, and Cloudflare.
 
+## Project Structure
+
+```
+rafael-protocol/
+├── .github/workflows/     # CI/CD pipeline
+├── .env.example          # Environment template
+├── apps/server/          # Railway API server
+├── docs/                 # Documentation
+├── packages/types/       # Shared TypeScript types
+├── .gitignore
+├── package.json         # Monorepo root
+├── tsconfig.json
+└── README.md
+```
+
 ## What's Inside
 
-This repository contains the architectural documentation and implementation plan for a next-generation Digital Adoption Platform that disrupts traditional solutions like WalkMe by leveraging AI for:
+This repository contains:
 
-- **Auto-generated guides** - No more manual authoring
-- **Self-healing** - Automatically detects UI changes
-- **Active execution** - AI performs tasks for users
-- **Personalization** - Individual + contextual learning
-- **Continuous improvement** - Learns from every session
-
-## Key Files
-
-- `dap-agent.md` - Full master architecture document
-- `README.md` - Project documentation with Mermaid diagrams
+- **Monorepo setup** with Bun workspaces
+- **Shared types** package (@rafael/types)
+- **API server** scaffold (Bun + Hono)
+- **CI/CD workflow** for automated deployments
+- **Full architecture documentation**
 
 ## Tech Stack
 
@@ -32,10 +42,6 @@ This repository contains the architectural documentation and implementation plan
 | CDN       | Cloudflare R2 + Workers          |
 | Database  | Supabase (PostgreSQL + pgvector) |
 | Cache     | Upstash Redis                    |
-
-## Getting Started
-
-See `README.md` for complete project documentation and architecture diagrams.
 
 ---
 
