@@ -2,8 +2,8 @@
 
 **THE RAFAEL PROTOCOL: Healing Software Friction via Multi-Model Agentic Orchestration**
 
-_AI-Native Digital Adoption Platform — Triad Intelligence Architecture_  
-_Claude · Gemini · Kimi · Trigger.dev · Bun · Cloudflare_
+_AI-Native Digital Adoption Platform — Quad Intelligence Architecture_  
+_Claude · Gemini · Kimi · Codex · Trigger.dev · Bun · Cloudflare_
 
 ---
 
@@ -13,7 +13,7 @@ This document is the single source of truth for the Rafael Protocol — a next-g
 
 The core thesis: traditional Digital Adoption Platforms (DAPs) like WalkMe are pre-AI in their architecture — static, brittle, manually authored, and expensive to maintain. Rafael replaces that entire model with a system that learns from usage, generates its own guides, executes tasks autonomously, and improves over time.
 
-The key differentiator: **Triad Intelligence** — a multi-model architecture leveraging Claude, Gemini, and Kimi for heterogeneous model routing that optimizes for latency, cost, and reasoning uptime.
+The key differentiator: **Quad Intelligence** — a multi-model architecture leveraging Claude, Gemini, Kimi, and Codex for heterogeneous model routing that optimizes for latency, cost, and reasoning uptime.
 
 ---
 
@@ -21,7 +21,7 @@ The key differentiator: **Triad Intelligence** — a multi-model architecture le
 
 1. [The Problem Space](#1-the-problem-space)
 2. [Rafael Protocol Vision](#2-rafael-protocol-vision)
-3. [Triad Intelligence Architecture](#3-triad-intelligence-architecture)
+3. [Quad Intelligence Architecture](#3-quad-intelligence-architecture)
 4. [Durable Execution Spine](#4-durable-execution-spine)
 5. [Stack Selection Rationale](#5-stack-selection-rationale)
 6. [Component Deep Dives](#6-component-deep-dives)
@@ -58,17 +58,17 @@ SAP acquired WalkMe in 2023 for $1.5 billion. The category is validated and enor
 
 ### The Opportunity
 
-| Dimension         | WalkMe                     | Rafael Protocol                             |
-| ----------------- | -------------------------- | ------------------------------------------- |
-| Guide creation    | Manual, weeks of authoring | Auto-generated from session data            |
-| Maintenance       | Constant manual updates    | Self-healing, auto-detects UI changes       |
-| Interaction model | Passive tooltips           | Active execution — AI does it for you       |
-| Personalization   | Role-based segments        | Individual + contextual                     |
-| Intelligence      | None                       | Learns from every session                   |
-| Memory            | None                       | Per-user, per-org, per-app                  |
-| AI Architecture   | N/A                        | Triad Intelligence (Claude + Gemini + Kimi) |
-| Pricing           | $100k–500k/yr              | Disruptive wedge pricing                    |
-| Moat              | Enterprise contracts       | Data network effects + knowledge graph      |
+| Dimension         | WalkMe                     | Rafael Protocol                                    |
+| ----------------- | -------------------------- | -------------------------------------------------- |
+| Guide creation    | Manual, weeks of authoring | Auto-generated from session data                   |
+| Maintenance       | Constant manual updates    | Self-healing, auto-detects UI changes              |
+| Interaction model | Passive tooltips           | Active execution — AI does it for you              |
+| Personalization   | Role-based segments        | Individual + contextual                            |
+| Intelligence      | None                       | Learns from every session                          |
+| Memory            | None                       | Per-user, per-org, per-app                         |
+| AI Architecture   | N/A                        | Quad Intelligence (Claude + Gemini + Kimi + Codex) |
+| Pricing           | $100k–500k/yr              | Disruptive wedge pricing                           |
+| Moat              | Enterprise contracts       | Data network effects + knowledge graph             |
 
 ---
 
@@ -85,6 +85,7 @@ Relying on a single AI provider introduces unacceptable risks regarding latency,
 - **Claude (The Lead Engineer)**: High-stakes DOM reasoning and complex multi-step tool use
 - **Gemini (The Vision Specialist)**: Sub-second UI perception and visual triage
 - **Kimi (The Context Specialist)**: Processing massive enterprise documentation to understand the app's rules
+- **Codex (The Execution Specialist)**: Computer use, API integrations, and code generation for automation
 
 By routing these models via a gateway (like Cloudflare AI Gateway), the system optimizes for the lowest possible latency and highest reasoning uptime.
 
@@ -98,7 +99,7 @@ The greatest challenge for browser-based agents is state synchronization. If a u
 
 ---
 
-## 3. Triad Intelligence Architecture
+## 3. Quad Intelligence Architecture
 
 ### Why Multi-Model?
 
@@ -110,18 +111,18 @@ The Rafael Protocol rejects single-model dependency. Each AI provider has distin
 │         (Rate limiting, caching, cost control)                 │
 └─────────────────────────┬───────────────────────────────────────┘
                           │
-        ┌─────────────────┼─────────────────┐
-        ▼                 ▼                 ▼
-   ┌─────────┐      ┌─────────┐      ┌─────────┐
-   │ CLAUDE  │      │ GEMINI  │      │  KIMI  │
-   │   ○     │      │   ○     │      │   ○     │
-   └────┬────┘      └────┬────┘      └────┬────┘
-        │                │                │
-        │ Lead Engineer │ Vision Specialist│ Context Specialist
-        │ DOM reasoning │ UI perception   │ Doc processing
-        │ Multi-step    │ Visual triage   │ Enterprise rules
-        │ tool use      │ Sub-second     │ Massive context
-        └────────────────┴────────────────┘
+        ┌─────────────────┼─────────────────┼─────────────────┐
+        ▼                 ▼                 ▼                 ▼
+   ┌─────────┐      ┌─────────┐      ┌─────────┐      ┌─────────┐
+   │ CLAUDE  │      │ GEMINI  │      │  KIMI   │      │ CODEX   │
+   │   ○     │      │   ○     │      │   ○     │      │   ○     │
+   └────┬────┘      └────┬────┘      └────┬────┘      └────┬────┘
+        │                │                │                │
+        │ Lead Engineer │ Vision Specialist│ Context Specialist│ Execution Specialist
+        │ DOM reasoning │ UI perception   │ Doc processing   │ Computer use
+        │ Multi-step    │ Visual triage   │ Enterprise rules│ API integration
+        │ tool use      │ Sub-second     │ Massive context │ Code generation
+        └────────────────┴────────────────┴────────────────┘
                           │
                           ▼
               ┌─────────────────────────┐
@@ -138,6 +139,7 @@ The Rafael Protocol rejects single-model dependency. Each AI provider has distin
 | Fast intent classification   | Claude Haiku  | 10x cheaper, sub-second classification   |
 | Visual UI analysis           | Gemini        | Sub-second visual triage                 |
 | Enterprise doc understanding | Kimi          | Massive context window for docs          |
+| Computer use / automation    | OpenAI Codex  | Native computer use capabilities         |
 | High-stakes actions          | Claude        | Confidence threshold enforcement         |
 
 ---
@@ -178,7 +180,7 @@ Task handed to Trigger.dev (runs independently of browser)
 
 ### Why Trigger.dev
 
-The Claude/Gemini/Kimi agent loops require unlimited runtime. Serverless functions cannot handle this. Trigger.dev provides:
+The Claude/Gemini/Kimi/Codex agent loops require unlimited runtime. Serverless functions cannot handle this. Trigger.dev provides:
 
 - No timeout ceiling
 - Automatic retry on API failures
@@ -199,9 +201,16 @@ The browser snippet may be loaded millions of times per day. Cloudflare's 300+ P
 
 Single runtime for everything: TypeScript execution without ts-node, snippet bundling without Webpack, testing without Jest config, package management 10–25x faster than npm.
 
-### Why Triad Intelligence (Claude + Gemini + Kimi)
+### Why Quad Intelligence (Claude + Gemini + Kimi + Codex)
 
-The core problem — reasoning about ambiguous DOM state and deciding which elements to interact with — requires genuine judgment. Claude provides superior reasoning. Gemini provides sub-second visual perception. Kimi provides massive context for enterprise documentation. Together, they provide redundancy and optimization.
+The core problem — reasoning about ambiguous DOM state and deciding which elements to interact with — requires genuine judgment. Each model provides unique capabilities:
+
+- **Claude**: Superior reasoning and tool-use for complex DOM navigation
+- **Gemini**: Sub-second visual perception for UI triage
+- **Kimi**: Massive context window for enterprise documentation
+- **Codex**: Native computer use and API integration capabilities
+
+Together, they provide redundancy, cost optimization, and the best capabilities for each task type.
 
 ---
 
@@ -234,7 +243,7 @@ The snippet is a single JS file that installs into any web app via a script tag.
 
 ### The Rafael Agent
 
-Pure TypeScript package. The reasoning core that calls the Triad Intelligence.
+Pure TypeScript package. The reasoning core that calls the Quad Intelligence.
 
 **11 browser tools** the AI can call:
 `read_page`, `click_element`, `fill_field`, `select_option`, `navigate`, `scroll_to`, `wait_for`, `show_tooltip`, `ask_user`, `complete`, `abort`
@@ -296,7 +305,7 @@ To interact with the web, the Rafael Agent requires a standardized set of tools:
                     ↓
 [4] Railway server
     - validateAppKey() → { appId, orgId }
-    - Determine best model (Triad Intelligence routing)
+    - Determine best model (Quad Intelligence routing)
     - tasks.trigger("rafael-agent-run", payload)
     - return { runId, publicToken }   ← <200ms response
                     ↓
@@ -305,7 +314,7 @@ To interact with the web, the Rafael Agent requires a standardized set of tools:
     - Connects to Trigger.dev SSE endpoint
                     ↓
 [6] Trigger.dev runs agentTask
-    - Route to appropriate model (Claude/Gemini/Kimi)
+    - Route to appropriate model (Claude/Gemini/Kimi/Codex)
     - Assemble context from knowledge graph
     - Stream events to snippet
                     ↓
@@ -390,7 +399,7 @@ rafael-protocol/
 │   └── snippet/          # Browser snippet
 ├── packages/
 │   ├── types/            # @rafael/types
-│   ├── agent/            # @rafael/agent — Triad Intelligence core
+│   ├── agent/            # @rafael/agent — Quad Intelligence core
 │   └── context/          # @rafael/context
 ├── trigger/
 │   └── tasks/           # Trigger.dev tasks
@@ -404,7 +413,7 @@ rafael-protocol/
 
 **Weeks 1–2**: Foundation — Monorepo, snippet shell, Railway deployment
 
-**Weeks 3–4**: Agent Loop — Triad Intelligence routing, Trigger.dev integration
+**Weeks 3–4**: Agent Loop — Quad Intelligence routing, Trigger.dev integration
 
 **Weeks 5–6**: Action Executor — Element finder, confidence thresholds
 
@@ -475,6 +484,9 @@ GEMINI_API_KEY=...
 # ── Moonshot (Kimi) ─────────────────────────────────────────
 KIMI_API_KEY=...
 
+# ── OpenAI (Codex) ─────────────────────────────────────────
+OPENAI_API_KEY=sk-...
+
 # ── Trigger.dev ──────────────────────────────────────────────
 TRIGGER_SECRET_KEY=tr_prod_...
 TRIGGER_ACCESS_TOKEN=tr_pat_...
@@ -503,12 +515,13 @@ SENTRY_DSN=https://...
 
 ## Closing Note
 
-Rafael Protocol sits at the intersection of four converging forces in 2026:
+Rafael Protocol sits at the intersection of five converging forces in 2026:
 
-1. **Multi-model AI maturity** — Claude, Gemini, and Kimi provide diverse, redundant intelligence
+1. **Multi-model AI maturity** — Claude, Gemini, Kimi, and Codex provide diverse, redundant intelligence
 2. **Durable execution infrastructure** — Trigger.dev enables long-running AI tasks without timeout anxiety
 3. **Enterprise AI readiness** — Buyers have AI budgets and mandates
-4. **Legacy DAP architectural ceiling** — The incumbent cannot retrofit AI onto a static system
+4. **Computer use revolution** — OpenAI Codex brings native automation capabilities
+5. **Legacy DAP architectural ceiling** — The incumbent cannot retrofit AI onto a static system
 
 The window is open. The models are ready. The market is waiting.
 
@@ -519,5 +532,5 @@ The window is open. The models are ready. The market is waiting.
 _Document: Rafael Protocol — Agentic OS Architecture_  
 _Author: Cyrus Alcala_  
 _Date: February 22 2026_  
-_Stack: Claude · Gemini · Kimi · Trigger.dev · Bun · Cloudflare_  
+_Stack: Claude · Gemini · Kimi · Codex · Trigger.dev · Bun · Cloudflare_  
 _Status: Day Zero — Building in Public_

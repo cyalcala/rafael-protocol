@@ -4,7 +4,7 @@ THE RAFAEL PROTOCOL: Healing Software Friction via Multi-Model Agentic Orchestra
 
 **Author:** Cyrus Alcala  
 **Date:** February 22 2026  
-**Subject:** Digital Adoption, Autonomous Labor, and the Triad Intelligence Architecture
+**Subject:** Digital Adoption, Autonomous Labor, and the Quad Intelligence Architecture
 
 ---
 
@@ -12,7 +12,7 @@ THE RAFAEL PROTOCOL: Healing Software Friction via Multi-Model Agentic Orchestra
 
 The gap between human intent and software execution—defined here as Interface Friction—has reached a breaking point. Legacy Digital Adoption Platforms (DAPs) rely on static, "brittle" selectors that break during UI updates and offer only passive guidance.
 
-This document proposes Rafael: an open-source Agentic OS concept designed to replace passive tooltips with Autonomous Labor. The blueprint outlines a system leveraging a Triad Intelligence (Claude, Gemini, and Kimi) and a Durable Execution spine (Trigger.dev) to create a self-healing layer that performs the work for the user. This is the architectural roadmap for building that system from scratch.
+This document proposes Rafael: an open-source Agentic OS concept designed to replace passive tooltips with Autonomous Labor. The blueprint outlines a system leveraging a Quad Intelligence (Claude, Gemini, Kimi, and Codex) and a Durable Execution spine (Trigger.dev) to create a self-healing layer that performs the work for the user. This is the architectural roadmap for building that system from scratch.
 
 ---
 
@@ -24,13 +24,14 @@ Furthermore, traditional DAPs are passive. They require a human to read a toolti
 
 ---
 
-## 3. The Proposed Architecture: Triad Intelligence
+## 3. The Proposed Architecture: Quad Intelligence
 
 To solve this, Rafael is designed around a multi-model architecture. Relying on a single AI provider introduces unacceptable risks regarding latency, cost, and regional outages. The planned system utilizes Heterogeneous Model Routing:
 
 - **Claude (The Lead Engineer):** Targeted for high-stakes DOM reasoning and complex multi-step tool use.
 - **Gemini (The Vision Specialist):** Targeted for sub-second UI perception and visual triage.
 - **Kimi (The Context Specialist):** Targeted for processing massive enterprise documentation to understand the app's rules.
+- **Codex (The Execution Specialist):** Targeted for computer use, API integrations, and code generation for automation.
 
 By routing these models via a gateway (like Cloudflare AI Gateway), the system aims to optimize for the lowest possible latency and highest reasoning uptime.
 
@@ -53,14 +54,16 @@ Rafael's architecture plans to solve this through Durable Execution using Trigge
 To interact with the web, the Rafael Agent will require a standardized set of tools to perceive and manipulate the DOM securely. The development roadmap includes building:
 
 - **Perception:** Tools like `read_page` to capture a semantic tree of the viewport, explicitly stripping Personally Identifiable Information (PII) before data processing.
+
 - **Interaction:** Robust `click_element` and `fill_field` tools that use fallback strategies (ARIA labels, text content, test IDs) to survive UI changes.
+
 - **Orchestration:** An `ask_user` tool acting as a "Human-in-the-Loop" safety valve. If the agent's confidence drops, it must pause and ask the user for clarification.
 
 ---
 
-## 6. Call to Action: Building in Public
+## 6. Call to Action:I am a technical writer, not a traditional software engineer. Building in Public
 
-I am a technical writer, not a traditional software engineer. I am writing this protocol because the logic of how we onboard users to software is fundamentally broken, and the tools to fix it—Gemini, Kimi, Claude, Cloudflare Workers, Trigger.dev, and Bun JS—finally exist.
+I am writing this protocol because the logic of how we onboard users to software is fundamentally broken, and the tools to fix it—Gemini, Kimi, Claude, Codex, Cloudflare Workers, Trigger.dev, and Bun JS—finally exist.
 
 I haven't written a line of production code yet. This document is Day Zero.
 
